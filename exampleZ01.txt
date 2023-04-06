@@ -1,7 +1,7 @@
 30
 #rooms
 D1 0 5
-##end
+##start
 Zone01 14 1
 C0 0 0
 C1 3 0
@@ -15,7 +15,7 @@ A4 7 1
 B0 6 5
 B1 7 4
 E2 8 3
-##start
+##end
 42 4 6
 D2 9 6
 D3 12 5

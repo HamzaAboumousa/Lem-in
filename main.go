@@ -32,19 +32,29 @@ type path struct {
 	ants   int
 }
 
-func readimput() int {
-	fmt.Printf("Entrer le nombre de fourmis: ")
-	reader := bufio.NewReader(os.Stdin)
-	input, err := reader.ReadString('\n')
-	if err != nil {
-		log.Fatal(err)
+func readimput(filename string) int {
+	file, err := os.Open(filename)
+	reader := bufio.NewScanner(file)
+	var input string
+	var fourmis int
+	for reader.Scan() {
+		line := reader.Text()
+		splittedline := strings.Split(line, " ")
+		if len(splittedline) == 1 {
+
+			input = splittedline[0]
+			input = strings.TrimSpace(input)
+			
+			fourmis, err = strconv.Atoi(input)
+			if err != nil {
+				fmt.Println("Not correct number")
+				continue
+			} else {
+				break
+			}
+		}
 	}
-	input = strings.TrimSpace(input)
-	fourmis, err := strconv.Atoi(input)
-	if err != nil {
-		fmt.Println("Entrer un nombre entier!")
-		fourmis = readimput()
-	}
+
 	return fourmis
 }
 
@@ -337,7 +347,8 @@ func main() {
 		fmt.Println("Usage: [./lem-in <file>]")
 		os.Exit(0)
 	}
-	fourmis := readimput()
+	filename := os.Args[1]
+	fourmis := readimput(filename)
 	var g graphe
 	conex := g.readfile()
 	g.nmbr = len(g.rooms)
